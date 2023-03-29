@@ -13,10 +13,10 @@ def button_click(label:Label):
 
 
 class MainWindow(Tk):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, thread, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.title('Main Window')
-        self.geometry('500x350')
+        self.geometry('800x350')
         self.resizable(False,False)
 
 
@@ -26,3 +26,12 @@ class MainWindow(Tk):
 
         self.button = Button(self, border=5, text="Click", command= lambda: button_click(self.healthLabel))
         self.button.pack(pady=20, padx=20)
+
+        self.bind('<space>', thread.stop)
+
+class StatWindow(Tk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.title('Stat Window')
+        self.geometry('350x600')
+        self.resizable(False,False)
