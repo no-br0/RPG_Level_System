@@ -9,8 +9,8 @@ _statwin = True
 
 
 def damage_player_button():
-    player.remove_health(1)
-    #player.vitality += 3
+    if player.remove_health(1):
+        player.vitality += 1
     mainWindow.update_window()
     if _statwin and statWindow.winfo_exists():
         statWindow.update_window()
@@ -28,8 +28,8 @@ def restore_player_button():
 class MainWindow(Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.title('Main Window')
-        self.geometry('900x450+900+400')
+        self.title('Game Window')
+        self.geometry('900x450+700+200')
         self.resizable(False,False)
         
         self.config(background="#d3d3d3")
@@ -64,7 +64,7 @@ class StatWindow(Toplevel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.title('Stat Window')
-        self.geometry('400x600+400+400')
+        self.geometry('400x600+200+200')
         self.resizable(False,False)
         
         self.config(background='#d3d3d3')
@@ -74,21 +74,31 @@ class StatWindow(Toplevel):
         self.style= Style()
         self.style.configure('Border.TFrame', background=self.bg1, relief='solid', foreground = "blue", borderwidth = 10)
         
+        self.statStyle = Style()
+        self.statStyle.configure("Background.TLabel",background=self.bg1)
+        
         self.frame = Frame(self, style='Border.TFrame', padding=(25,15,25,15))
         self.frame.pack(anchor='w', padx=30, pady=30)
         
         
-        self.frameTitle = Label(self.frame, text=f'Player Stats')
-        self.frameTitle.configure(background=self.bg1, font=("Times", 14, "bold", "italic"))
+        
+        self.frameTitle = Label(self.frame, text=f'Player Stats', style="Background.TLabel")
+        self.frameTitle.configure(font=("Times", 14, "bold", "italic"))
         self.frameTitle.pack(padx=0, pady=(0,10), anchor='n')
         
-        self.health = Label(self.frame)
-        self.health.configure(background=self.bg1)
+        self.health = Label(self.frame, style="Background.TLabel")
         self.health.pack(anchor='w')
         
-        self.maxhealth = Label(self.frame)
-        self.maxhealth.configure(background=self.bg1)
+        self.maxhealth = Label(self.frame, style="Background.TLabel")
         self.maxhealth.pack(anchor='w')
+        
+        self.gap1 = Label(self.frame, style="Background.TLabel")
+        self.gap1.pack()
+                
+        self.vitality = Label(self.frame, style="Background.TLabel")
+        self.vitality.pack(anchor='w')
+        
+        
         
         self.update_window()
         
@@ -97,6 +107,7 @@ class StatWindow(Toplevel):
     def update_window(self):
         self.health.config(text=f'Health: {player.health}')
         self.maxhealth.config(text=f'Max Health: {player.maxHealth()}')
+        self.vitality.config(text=f'Vitality: {player.vitality}')
         pass
 
 
