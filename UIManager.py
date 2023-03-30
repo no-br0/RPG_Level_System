@@ -93,11 +93,19 @@ class StatWindow(Toplevel):
         self.maxhealth.pack(anchor='w')
         
         self.gap1 = Label(self.frame, style="Background.TLabel")
-        self.gap1.pack()
-                
+        self.gap1.pack(anchor='w')
+        
         self.vitality = Label(self.frame, style="Background.TLabel")
         self.vitality.pack(anchor='w')
         
+        self.strength = Label(self.frame, style="Background.TLabel")
+        self.strength.pack(anchor='w')
+        
+        self.agility = Label(self.frame, style="Background.TLabel")
+        self.agility.pack(anchor='w')
+        
+        self.dexterity = Label(self.frame, style="Background.TLabel")
+        self.dexterity.pack(anchor='w')
         
         
         self.update_window()
@@ -108,6 +116,9 @@ class StatWindow(Toplevel):
         self.health.config(text=f'Health: {player.health}')
         self.maxhealth.config(text=f'Max Health: {player.maxHealth()}')
         self.vitality.config(text=f'Vitality: {player.vitality}')
+        self.strength.config(text=f'Strength: {player.strength}')
+        self.agility.config(text=f'Agility: {player.agility}')
+        self.dexterity.config(text=f'Dexterity: {player.dexterity}')
         pass
 
 
