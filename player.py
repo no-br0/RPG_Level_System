@@ -29,9 +29,12 @@ def remove_health(num):
         
 def restore_health(num):
     global health, ALIVE
-    if health + num < maxHealth():
+    if (health + num) <= maxHealth():
         health += num
         if not ALIVE:
             ALIVE = True
     else:
-        health = maxHealth()
+        if health < maxHealth():
+            health = maxHealth()
+        else:
+            print("Full Health")
