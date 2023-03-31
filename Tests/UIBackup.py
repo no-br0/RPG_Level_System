@@ -3,25 +3,18 @@ from tkinter.ttk import Progressbar, Frame, Style, Label, Button
 import player
 import time
 from customtkinter import CTkButton
-import tkinter as tk
-from Console import Console
 
 
 _statwin = True
 
-console_width = 1300
-console_height = 700
 
 
 def damage_player_button():
     if player.remove_health(9):
         player.vitality += 1
-        mainWindow.console.add_text(f"Player Health: {player.health}")
-        
     mainWindow.update_window()
     if _statwin and statWindow.winfo_exists():
         statWindow.update_window()
-        
         
         
         
@@ -31,25 +24,49 @@ def restore_player_button():
     if _statwin and statWindow.winfo_exists():
         statWindow.update_window()
         
-        
-        
-
 def player_step():
-    
     pass
     
 
-
+class Console(Frame):
+    def __init__(self, parent, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs)
+        
+        #self.output = []
+        
+        #self.output = Text(self, width=100, height=15)
+        #self.output.insert(END,"Hello World\n")
+        #self.output.insert(END,"Hello World\n")
+        #self.output.pack()
+        
+        #for i in range(20):
+        #    self.output.append(Label(self,width=150))
+        #    self.output[i].pack()
+            
+        #self.set_output(0,"Hello World")
+        
+        self.output_style = Style()
+        self.output_style.configure('output.TLabel', height=100, width=50)
+        
+        self.output = Label(self, style='output.TLabel', text="Hello World\nh\nh")
+        self.output.place(anchor='sw', height=100, width=100)
+        
+        self.style = Style()
+        self.style.configure('frame.TFrame',background='black', ipadx=10, height=20, width=20, border=10, relief='ridge')
+        
+        self.config(style='frame.TFrame')
+        
+    def set_output(self, num, txt):
+        num = (10-1)-num
+        self.output[num].config(text=txt)
         
 
 
 class MainWindow(Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        global console_width, console_height
-        
         self.title('Game Window')
-        self.geometry('1400x1000+800+200')
+        self.geometry('1000x800+800+200')
         self.resizable(False,False)
         
         self.config(background=("grey"))
@@ -61,24 +78,24 @@ class MainWindow(Tk):
         self.buttonStyle.configure('basic.TButton',border=3, relief='ridge', outline = 'red', anchor='nw')
 
         
-        self.console = Console(self, console_width, console_height)
-        self.console.pack()
+        self.console = Console(self)
+        self.console.place(height=100, width=100, x=450)
         
         
         self.damage_button = CTkButton(self, 
                                         text="Damage Player", 
                                         command= lambda: damage_player_button())
-        self.damage_button.pack()
+        self.damage_button.pack(pady=(5,5), padx=20, anchor='w')
         
         self.restore_button = CTkButton(self,
                                         text="Drink Health Potion",
                                         command= lambda: restore_player_button())
-        self.restore_button.pack()
+        self.restore_button.pack(pady=(5,5), padx=20, anchor='w')
         
         self.step_button = CTkButton(self,
                                      text="Step",
                                      command= lambda: player_step())
-        self.step_button.pack()
+        self.step_button.pack(pady=(5,20), padx=20, anchor='w')
         
     def update_window(self):
         #self.health.config(text=f'Health: {player.health}/{player.maxHealth()}')
@@ -87,18 +104,11 @@ class MainWindow(Tk):
 
 
 
-
-
-
-
-
-
-
 class StatWindow(Toplevel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.title('Stat Window')
-        self.geometry('600x1000+100+200')
+        self.geometry('550x800+200+200')
         self.resizable(False,False)
         
         self.config(background='grey')
@@ -167,8 +177,6 @@ class StatWindow(Toplevel):
         self.agility.config(text=f'Agility: {player.agility}')
         self.dexterity.config(text=f'Dexterity: {player.dexterity}')
         pass
-
-
 
 
 
