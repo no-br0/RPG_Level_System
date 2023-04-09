@@ -22,8 +22,6 @@ class Util():
     def __init__(self):
         self.console_width = 1300
         self.console_height = 700
-        
-    
     
     def damage_player_button(*args):
         print_health = False
@@ -34,12 +32,9 @@ class Util():
         else:
             mainWindow.console.add_text(f"Player Already Dead!")
                 
-        
         if print_health:
             mainWindow.console.add_text(f"Player Health: {player.health}")
             
-            
-
         mainWindow.update_window()
         if _statwin and statWindow.winfo_exists():
             statWindow.update_window()
@@ -56,7 +51,6 @@ class Util():
             
             
             
-
     def player_step(*args):
         pass
         
@@ -67,6 +61,14 @@ class Util():
 
 
 
+
+class GameLoop(threading.Thread):
+    def __init__(self):
+        super().__init__()
+        
+        
+    def run(self):
+        pass
 
 
 
