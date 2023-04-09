@@ -25,6 +25,7 @@ def remove_health(num):
             return False
     else:
         print("player already dead")
+        
         return False
         
 def restore_health(num):

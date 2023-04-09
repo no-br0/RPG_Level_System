@@ -5,12 +5,19 @@ class Console(Frame):
         super().__init__(parent, *args, **kwargs)
         
         self.text_x = 20
-        self.text_y = height - 30
+        self.text_y = height - 10
         self.move_y = -20
         
         self.text_bbox = []
         
-        self.canvas = Canvas(self, width=width, height=height, background='#1f1f1f', relief="sunken")
+        self.canvas = Canvas(self, 
+                             width=width, 
+                             height=height, 
+                             background='#1f1f1f', 
+                             highlightthickness=5, 
+                             highlightbackground="#303030", 
+                             relief='sunken',
+                             )
         self.canvas.pack(anchor='nw', ipady=10, ipadx=10)
 
     
@@ -21,14 +28,19 @@ class Console(Frame):
     
     def clear_console(self):
         self.canvas.delete('all')
+        #self.canvas.clipboard_clear()
         self.text_bbox.clear()
+        print('Console Cleared')
     
     def add_text(self,text):
         self.move_text()
         text = ("> " + text)
         
         self.text_bbox.append(self.canvas.create_text(
-            self.text_x, self.text_y,
+            self.text_x, 
+            self.text_y,
             anchor='nw',
-            text=text, fill='lightgreen', font='Times 12 bold'))
+            text=text, 
+            fill='lightgreen', 
+            font='Times 12 bold'))
         
